@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mood Meter Lite</title>
+  <!-- Tailwind CSS desde CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100 min-h-screen">
+  <!-- Login Screen -->
+  <div id="login-screen" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+      <h2 class="text-xl font-bold mb-2">Identifícate</h2>
+      <p class="text-gray-600 mb-4 text-sm">Exclusivo para mentees de Karen Guzmán | Comunidad KREI | Campus Monterrey</p>
+      <div class="mb-4">
+        <label class="block mb-1">Nombre completo:</label>
+        <input type="text" id="student-name" class="w-full p-2 border rounded">
+      </div>
+      <div class="mb-4">
+        <label class="block mb-1">Matrícula:</label>
+        <input type="text" id="student-id" class="w-full p-2 border rounded">
+      </div>
+      <button id="login-button" class="w-full bg-blue-500 text-white font-semibold py-2 rounded">
+        Comenzar
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container mx-auto px-4 py-8 max-w-lg">
+    <h1 class="text-2xl font-bold text-center mb-2">¿Cómo te sientes ahora?</h1>
+    <p class="text-center text-gray-600 text-sm mb-6">Comunidad KREI | Mentees de Karen Guzmán | Campus Monterrey</p>
+    
+    <!-- Mood Meter Simplified -->
+    <div class="mood-meter-lite">
+      <div class="grid grid-cols-2 gap-4">
+        <button id="yellow-quadrant" class="mood-btn" style="background-color: #FFDC51;">
+          <div class="p-6 text-center">
+            <span class="text-4xl block mb-2">😄</span>
+            <span class="font-medium">Emociones Altas</span>
+            <span class="text-xs block mt-1">Alta energía - Alto agrado</span>
+          </div>
+        </button>
+        
+        <button id="red-quadrant" class="mood-btn" style="background-color: #F27052;">
+          <div class="p-6 text-center">
+            <span class="text-4xl block mb-2">😤</span>
+            <span class="font-medium">Emociones Intensas</span>
+            <span class="text-xs block mt-1">Alta energía - Bajo agrado</span>
+          </div>
+        </button>
+        
+        <button id="green-quadrant" class="mood-btn" style="background-color: #92D36E;">
+          <div class="p-6 text-center">
+            <span class="text-4xl block mb-2">😌</span>
+            <span class="font-medium">Emociones Tranquilas</span>
+            <span class="text-xs block mt-1">Baja energía - Alto agrado</span>
+          </div>
+        </button>
+        
+        <button id="blue-quadrant" class="mood-btn" style="background-color: #51A8FF;">
+          <div class="p-6 text-center">
+            <span class="text-4xl block mb-2">😔</span>
+            <span class="font-medium">Emociones Bajas</span>
+            <span class="text-xs block mt-1">Baja energía - Bajo agrado</span>
+          </div>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Emotion Selection Panel (hidden initially) -->
+    <div id="emotions-panel" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-30">
+      <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md m-4">
+        <h3 id="emotions-title" class="text-xl font-bold mb-4">Selecciona tu emoción</h3>
+        
+        <div id="emotions-container" class="grid grid-cols-2 gap-3 mb-4">
+          <!-- Emotions loaded dynamically -->
+        </div>
+        
+        <button id="close-emotions" class="w-full py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-all">
+          Cancelar
+        </button>
+      </div>
+    </div>
+    
+    <!-- Selected Emotion Display -->
+    <div id="selected-emotion-container" class="hidden mt-6 p-3 bg-white rounded-lg shadow-md text-center">
+      <span id="selected-emotion-emoji" class="text-3xl mr-2"></span>
+      <span id="selected-emotion-name" class="font-semibold text-lg"></span>
+    </div>
+    
+    <!-- Quick Input Form -->
+    <div id="input-form" class="hidden mt-6">
+      <div class="mb-4">
+        <label class="block mb-2 font-medium">¿Cuál es la historia detrás de esa emoción?</label>
+        <textarea id="feeling-reason" class="w-full p-3 border rounded-lg h-20" placeholder="Describe brevemente el motivo..."></textarea>
+      </div>
+      
+      <div class="mb-4">
+        <label class="block mb-2 font-medium">¿Qué te gustaría hacer al respecto?</label>
+        <textarea id="feeling-action" class="w-full p-3 border rounded-lg h-20" placeholder="Las emociones no se desvanecen por sí solas. ¿Qué harás con lo que sientes?"></textarea>
+      </div>
+      
+      <div class="mb-4">
+        <label class="block mb-2 font-medium">¿Cómo puedo ayudarte?</label>
+        <textarea id="feeling-help" class="w-full p-3 border rounded-lg h-20" placeholder="¿De quién o quiénes puedes apoyarte? ¿Qué te hace falta saber?"></textarea>
+      </div>
+      
+      <button id="submit-button" class="w-full bg-green-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-green-600 transition-all">
+        Registrar mi estado de ánimo
+      </button>
+      
+      <button id="contact-button" class="w-full mt-3 bg-blue-500 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:bg-blue-600 transition-all flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+          <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+        </svg>
+        Contactar a mi mentora
+      </button>
+    </div>
+    
+    <!-- Success Message -->
+    <div id="success-message" class="hidden mt-4 p-4 bg-green-100 text-green-800 rounded-lg text-center">
+      ¡Gracias por compartir tu estado de ánimo! Tu registro ha sido guardado.
+    </div>
+    
+    <!-- Resources Section (hidden initially) -->
+    <div id="resources-section" class="hidden mt-6 p-5 bg-white rounded-lg shadow-md">
+      <h3 class="text-xl font-bold mb-4">Recursos de apoyo</h3>
+      <p class="mb-4 text-gray-600">Aquí encontrarás servicios que pueden ser de utilidad según tus necesidades:</p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-5">
+        <!-- Línea TQueremos -->
+        <a href="https://tqueremos.tec.mx/es/lineatqueremos" target="_blank" class="resource-btn flex flex-col items-center p-4 bg-blue-50 border-l-4 border-blue-500 rounded-lg hover:bg-blue-100 transition-all">
+          <div class="flex items-center justify-center w-12 h-12 bg-blue-500 text-white rounded-full mb-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+            </svg>
+          </div>
+          <span class="font-semibold">Línea TQueremos</span>
+          <span class="text-xs text-gray-500">Asesoría psicológica 24/7</span>
+        </a>
+        
+        <!-- MAE -->
+        <a href="https://maes.mx/#/" target="_blank" class="resource-btn flex flex-col items-center p-4 bg-purple-50 border-l-4 border-purple-500 rounded-lg hover:bg-purple-100 transition-all">
+          <div class="flex items-center justify-center w-12 h-12 bg-purple-500 text-white rounded-full mb-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+            </svg>
+          </div>
+          <span class="font-semibold">Mentores Académicos</span>
+          <span class="text-xs text-gray-500">Asesorías académicas MAE</span>
+        </a>
+        
+        <!-- Punto Blanco -->
+        <a href="https://linktr.ee/PuntoBlancoTec" target="_blank" class="resource-btn flex flex-col items-center p-4 bg-teal-50 border-l-4 border-teal-500 rounded-lg hover:bg-teal-100 transition-all">
+          <div class="flex items-center justify-center w-12 h-12 bg-teal-500 text-white rounded-full mb-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+          </div>
+          <span class="font-semibold">Punto Blanco</span>
+          <span class="text-xs text-gray-500">Meditación y bienestar emocional</span>
+        </a>
+        
+        <!-- Descubre tu Fortaleza -->
+        <a href="https://tec.rs/DF-FJ25" target="_blank" class="resource-btn flex flex-col items-center p-4 bg-yellow-50 border-l-4 border-yellow-500 rounded-lg hover:bg-yellow-100 transition-all">
+          <div class="flex items-center justify-center w-12 h-12 bg-yellow-500 text-white rounded-full mb-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <span class="font-semibold">Descubre tu Fortaleza</span>
+          <span class="text-xs text-gray-500">Identificación de recursos personales</span>
+        </a>
+        
+        <!-- Mejoramiento Académico -->
+        <a href="https://mitec.itesm.mx/sites/ServAcad/S_CURSOS/Transforma_Habitos/index.html" target="_blank" class="resource-btn flex flex-col items-center p-4 bg-green-50 border-l-4 border-green-500 rounded-lg hover:bg-green-100 transition-all">
+          <div class="flex items-center justify-center w-12 h-12 bg-green-500 text-white rounded-full mb-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <span class="font-semibold">Mejoramiento Académico</span>
+          <span class="text-xs text-gray-500">Cursos gratuitos para estudiantes</span>
+        </a>
+        
+        <!-- Nutrición -->
+        <a href="https://sites.google.com/tec.mx/nutricionconsulta/home" target="_blank" class="resource-btn flex flex-col items-center p-4 bg-red-50 border-l-4 border-red-500 rounded-lg hover:bg-red-100 transition-all">
+          <div class="flex items-center justify-center w-12 h-12 bg-red-500 text-white rounded-full mb-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+          </div>
+          <span class="font-semibold">Nutrición</span>
+          <span class="text-xs text-gray-500">Consultas y asesoría nutricional</span>
+        </a>
+      </div>
+      
+      <p class="text-sm text-gray-600 text-center mb-4">Todos estos servicios son gratuitos para la comunidad Tec</p>
+      <p class="text-sm text-center bg-blue-50 p-3 rounded-lg">
+        ¿No encuentras lo que necesitas o tienes dudas? 
+        <br>
+        <span class="font-semibold">Escríbeme directamente a mi, tu mentora Karen</span>
+        <br>
+        <a id="direct-contact" href="#" class="text-blue-600 hover:underline">Contactar ahora</a>
+      </p>
+    </div>
+    
+    <!-- Quick History View -->
+    <div id="quick-history" class="mt-10">
+      <h2 class="text-xl font-semibold mb-3">Historial Reciente</h2>
+      <div id="history-list" class="bg-white rounded-lg shadow-md overflow-hidden">
+        <!-- History items loaded dynamically -->
+      </div>
+    </div>
+  </div>
+  
+  <!-- Notifications -->
+  <div id="notifications-container" class="fixed bottom-4 right-4 z-50"></div>
+  
+  <script src="script.js"></script>
+</body>
+</html>
+  </div>
+  
+  <!-- Notifications -->
+  <div id="notifications-container" class="fixed bottom-4 right-4 z-50"></div>
+  
+  <script src="script.js"></script>
+</body>
+</html>
