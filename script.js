@@ -366,7 +366,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Número de teléfono de la mentora (reemplazar con el número real)
-    const phoneNumber = "5218110123690"; // Reemplazar con el número real
+    const phoneNumber = "5218128612913"; // Reemplazar con el número real
     
     // Crear URL para WhatsApp
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
@@ -377,7 +377,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function sendToGoogleSheets(moodData) {
     // URL de tu implementación de Google Apps Script
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbxHIgXgV3-9QICix4yMWt82_0olbKSmoIKKVYXujPHDjhKZ9-aMcQAEAaGG34RCwM8l/exec';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwkLOR30FIOoxFR7xYuPS_Y8CR3GH4V6UTGmazKnOs3sGt-84W_cu4r2XfSJUaH1n7eXw/exec';
     
     // Datos a enviar
     const formData = new FormData();
