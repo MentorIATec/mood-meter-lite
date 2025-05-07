@@ -367,7 +367,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
     function sendToGoogleSheets(moodData) {
       // URL de tu implementación de Google Apps Script
-      const scriptURL = 'https://script.google.com/macros/s/AKfycbxHIgXgV3-9QICix4yMWt82_0olbKSmoIKKVYXujPHDjhKZ9-aMcQAEAaGG34RCwM8l/exec';
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbz0fVx93y_9XD_DL82MAp9kbEWPdi8WdRfwvfuKsNjRTNl-5DyXVMBmTSV9PXAU7JF3og/exec';
       
       // Datos a enviar
       const formData = new FormData();
