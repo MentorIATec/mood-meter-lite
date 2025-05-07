@@ -356,7 +356,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       
       // Número de teléfono de la mentora (reemplazar con el número real)
-      const phoneNumber = "5218110123690"; // Reemplazar con el número real
+      const phoneNumber = "5218128612913"; // Reemplazar con el número real
       
       // Crear URL para WhatsApp
       const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
