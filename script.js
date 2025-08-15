@@ -196,11 +196,15 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
       }
       
+      // Asignamos la emoción seleccionada al estado global
       selectedEmotion = {
         ...emotion,
         quadrant
       };
       
+      console.log('Emoción seleccionada:', selectedEmotion); // Para depuración
+      
+      // Actualizamos la UI
       selectedEmotionEmoji.textContent = emotion.emoji;
       selectedEmotionName.textContent = `Te sientes: ${emotion.name}`;
       selectedEmotionContainer.classList.remove('hidden');
@@ -262,13 +266,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 500);
       }
       
-      // Limpiar formulario
-      selectedEmotion = null;
+      // Limpiar formulario y resetear estado
       selectedEmotionContainer.classList.add('hidden');
       inputForm.classList.add('hidden');
       feelingReasonInput.value = '';
       feelingActionInput.value = '';
       feelingHelpInput.value = '';
+      
+      // Es importante resetear la variable DESPUÉS de enviar los datos
+      // para evitar problemas de validación
+      setTimeout(() => {
+        selectedEmotion = null;
+        console.log('Estado reiniciado'); // Para depuración
+      }, 100);
       
       // Actualizar historial
       updateHistory();
@@ -356,7 +366,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       
       // Número de teléfono de la mentora (reemplazar con el número real)
-      const phoneNumber = "5218110123690"; // Reemplazar con el número real
+      const phoneNumber = "5218128612913"; // Reemplazar con el número real
       
       // Crear URL para WhatsApp
       const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
@@ -367,7 +377,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
     function sendToGoogleSheets(moodData) {
       // URL de tu implementación de Google Apps Script
-      const scriptURL = 'https://script.google.com/macros/s/AKfycbxHIgXgV3-9QICix4yMWt82_0olbKSmoIKKVYXujPHDjhKZ9-aMcQAEAaGG34RCwM8l/exec';
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbwkLOR30FIOoxFR7xYuPS_Y8CR3GH4V6UTGmazKnOs3sGt-84W_cu4r2XfSJUaH1n7eXw/exec';
       
       // Datos a enviar
       const formData = new FormData();
